@@ -34,7 +34,7 @@ resource "aws_shield_protection_group" "this" {
 # Health Check
 ##################################################
 resource "aws_route53_health_check" "this" {
-  for_each          = var.health_check_configuration
+  for_each          = var.health_check_configuration == null ? {} : var.health_check_configuration
   ip_address        = each.value.resource_ip
   port              = each.value.health_check_port
   type              = each.value.health_check_type

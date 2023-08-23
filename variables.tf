@@ -16,6 +16,14 @@ variable "protection_group_id" {
 variable "aggregation" {
   description = "Defines how AWS Shield combines resource data for the group in order to detect, mitigate, and report events."
   type        = string
+  validation {
+    condition = contains([
+      "SUM",
+      "MEAN",
+      "MAX",
+    ], var.aggregation)
+    error_message = "Valid values for `var.aggregation` are `SUM | MEAN | MAX`."
+  }
 }
 
 variable "pattern" {
