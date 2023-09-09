@@ -17,11 +17,13 @@ resource "aws_shield_protection" "this" {
 }
 
 resource "aws_shield_protection_group" "this" {
-  protection_group_id = var.protection_group_id
-  aggregation         = var.aggregation
-  pattern             = var.pattern
-  members             = [var.resource_arn]
-  resource_type       = var.resource_type
+  for_each = var.protection_group_config != null ? { for config in var.protection_group_config : config.id => config } : {}
+
+  protection_group_id = each.value.id
+  aggregation         = each.value.aggregation
+  pattern             = each.value.pattern
+  resource_type       = each.value.resource_type
+  members             = try([var.resource_arn], [])
   tags = merge(
     local.tags,
     var.tags

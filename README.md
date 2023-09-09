@@ -43,14 +43,11 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aggregation"></a> [aggregation](#input\_aggregation) | Defines how AWS Shield combines resource data for the group in order to detect, mitigate, and report events. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | A friendly name for the Protection you are creating. | `string` | n/a | yes |
-| <a name="input_pattern"></a> [pattern](#input\_pattern) | The criteria to use to choose the protected resources for inclusion in the group. | `string` | n/a | yes |
-| <a name="input_protection_group_id"></a> [protection\_group\_id](#input\_protection\_group\_id) | The name of the protection group. | `string` | n/a | yes |
+| <a name="input_protection_group_config"></a> [protection\_group\_config](#input\_protection\_group\_config) | `id` - The name of the protection group, or protection\_group\_id<br>  `aggregation` - Defines how AWS Shield combines resource data for the group in order to detect, mitigate, and report events.<br>  `pattern` - The criteria to use to choose the protected resources for inclusion in the group.<br>  `resource_type` - (Optional) The resource type to include in the protection group. You must set this only when you set pattern to `BY_RESOURCE_TYPE`. | <pre>list(object({<br>    id            = string<br>    aggregation   = string<br>    pattern       = string<br>    resource_type = optional(string)<br>  }))</pre> | n/a | yes |
 | <a name="input_resource_arn"></a> [resource\_arn](#input\_resource\_arn) | The ARN (Amazon Resource Name) of the resource to be protected. | `string` | n/a | yes |
 | <a name="input_health_check_configuration"></a> [health\_check\_configuration](#input\_health\_check\_configuration) | Amazon Route53 Health Check Configuration to be associated to AWS Shield Advanced Protection. | `map(any)` | `null` | no |
-| <a name="input_resource_type"></a> [resource\_type](#input\_resource\_type) | The resource type to include in the protection group. This is required if `pattern` is set to BY\_RESOURCE\_TYPE. Otherwise this must be not set. Defaults to `null` | `string` | `null` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | Key-value map of resource tags. Defaults to `{}` | `map(string)` | `{}` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Key-value map of resource tags to apply to all taggable resources created by the module. If configured with a provider `default_tags` configuration block present, tags with matching keys will overwrite those defined at the provider-level. Defaults to `{}`. | `map(string)` | `{}` | no |
 
 ### Outputs
 
