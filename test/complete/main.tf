@@ -11,8 +11,6 @@ resource "aws_eip" "example" {
   domain = "vpc"
 }
 
-
-
 module "shield_advanced" {
   source = "../.."
 
@@ -68,5 +66,4 @@ module "shield_advanced" {
       resource_type = "ELASTIC_IP_ALLOCATION"
     },
   ]
-
 }

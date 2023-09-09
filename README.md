@@ -6,10 +6,77 @@ Terraform module that creates AWS Shield Advanced Resources
   - [Usage](#usage)
   - [Overview Diagrams](#overview-diagrams)
   - [Terraform Module](#terraform-module)
+    - [Requirements](#requirements)
+    - [Providers](#providers)
+    - [Modules](#modules)
+    - [Resources](#resources)
+    - [Inputs](#inputs)
+    - [Outputs](#outputs)
 
 ## Usage
 
+```hcl
+module "shield_advanced" {
+  source = "aws-ia/terraform-aws-shield-advanced/aws"
+
+  name         = "Example protection"
+  resource_arn = "${local.arn_prefix}/${aws_eip.example.id}"
+
+  protection_group_config = [
+    {
+      id          = "Arbitrary Resource"
+      aggregation = "MEAN"
+      pattern     = "ARBITRARY"
+      members     = "${local.arn_prefix}/${aws_eip.example.id}"
+    },
+    {
+      id          = "All Resources"
+      aggregation = "MEAN"
+      pattern     = "ALL"
+    },
+    {
+      id            = "CloudFront Resource"
+      aggregation   = "SUM"
+      pattern       = "BY_RESOURCE_TYPE"
+      resource_type = "CLOUDFRONT_DISTRIBUTION"
+    },
+    {
+      id            = "Route53 Resource"
+      aggregation   = "MAX"
+      pattern       = "BY_RESOURCE_TYPE"
+      resource_type = "ROUTE_53_HOSTED_ZONE"
+    },
+    {
+      id            = "GlobalAccelerator Resource"
+      aggregation   = "SUM"
+      pattern       = "BY_RESOURCE_TYPE"
+      resource_type = "GLOBAL_ACCELERATOR"
+    },
+    {
+      id            = "ALB Resource"
+      aggregation   = "MEAN"
+      pattern       = "BY_RESOURCE_TYPE"
+      resource_type = "APPLICATION_LOAD_BALANCER"
+    },
+    {
+      id            = "CLB Resource"
+      aggregation   = "MEAN"
+      pattern       = "BY_RESOURCE_TYPE"
+      resource_type = "CLASSIC_LOAD_BALANCER"
+    },
+    {
+      id            = "ElasticIP Resource"
+      aggregation   = "SUM"
+      pattern       = "BY_RESOURCE_TYPE"
+      resource_type = "ELASTIC_IP_ALLOCATION"
+    },
+  ]
+}
+```
+
 ## Overview Diagrams
+
+![shield-diagram](./docs/Architectures-ShieldAdvanced.png)
 
 ## Terraform Module
 
